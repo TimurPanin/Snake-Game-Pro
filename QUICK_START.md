@@ -12,17 +12,20 @@
 ## 📋 Ручная загрузка
 
 ### 1. Установите Git
+
 ```bash
 # Скачайте с: https://git-scm.com/downloads
 ```
 
 ### 2. Настройте Git
+
 ```bash
 git config --global user.name "Ваше Имя"
 git config --global user.email "ваш.email@example.com"
 ```
 
 ### 3. Инициализируйте репозиторий
+
 ```bash
 git init
 git add .
@@ -38,12 +41,14 @@ git branch -M main
 - **НЕ** ставьте галочки на README, .gitignore, license
 
 ### 5. Загрузите код
+
 ```bash
 git remote add origin https://github.com/ВАШ_USERNAME/snake-game-pro.git
 git push -u origin main
 ```
 
 ### 6. Добавьте тег релиза
+
 ```bash
 git tag -a v1.0.0 -m "First release: Snake Game Pro"
 git push origin v1.0.0
@@ -59,7 +64,7 @@ git push origin v1.0.0
 
 ## 📊 Что будет загружено
 
-```
+```text
 ✅ 15+ файлов исходного кода
 ✅ 5 React компонентов
 ✅ 4 кастомных хука

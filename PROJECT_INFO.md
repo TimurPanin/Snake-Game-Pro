@@ -6,7 +6,7 @@
 
 ## 🏷️ Topics для GitHub
 
-```
+```text
 react, game, snake, javascript, webpack, hooks, useReducer, components, power-ups, localStorage, modern-js, game-development, react-hooks, custom-hooks, web-game, arcade-game
 ```
 
