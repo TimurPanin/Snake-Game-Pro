@@ -10,7 +10,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -20,10 +20,17 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.(png|jpg|jpeg|gif|svg|mp3|wav)$/,
+        type: 'asset/resource',
+      },
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({

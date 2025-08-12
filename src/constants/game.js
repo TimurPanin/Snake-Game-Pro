@@ -35,9 +35,12 @@ export const GAME_MODES = {
 
 // Power-ups
 export const POWER_UPS = {
-  SPEED_BOOST: { name: 'Speed Boost', duration: 5000, color: '#ffd700' },
-  DOUBLE_POINTS: { name: 'Double Points', duration: 8000, color: '#ff69b4' },
-  GHOST_MODE: { name: 'Ghost Mode', duration: 6000, color: '#00ffff' },
+  SPEED_BOOST: { name: 'Speed Boost', duration: 5000, color: '#ffd700', icon: '⚡', description: 'Увеличивает скорость на 5 секунд' },
+  DOUBLE_POINTS: { name: 'Double Points', duration: 8000, color: '#ff69b4', icon: '💎', description: 'Удваивает очки на 8 секунд' },
+  GHOST_MODE: { name: 'Ghost Mode', duration: 6000, color: '#00ffff', icon: '👻', description: 'Прохождение сквозь стены и себя на 6 секунд' },
+  SHIELD: { name: 'Shield', duration: 10000, color: '#32CD32', icon: '🛡️', description: 'Защита от столкновений на 10 секунд' },
+  TIME_FREEZE: { name: 'Time Freeze', duration: 4000, color: '#9370DB', icon: '⏰', description: 'Останавливает время на 4 секунды' },
+  MAGNET: { name: 'Magnet', duration: 7000, color: '#FF4500', icon: '🧲', description: 'Притягивает еду к змейке на 7 секунд' },
 };
 
 // Local Storage Keys
