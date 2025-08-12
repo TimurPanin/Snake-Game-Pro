@@ -286,6 +286,16 @@ h2 {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
+.sound-button {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  font-size: 1.2rem;
+  min-width: 50px;
+}
+
+.sound-button:hover {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+}
+
 .game-over-overlay {
   position: fixed;
   top: 0;

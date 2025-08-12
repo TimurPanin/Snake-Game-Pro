@@ -1,4 +1,5 @@
 import React from 'react';
+import soundManager from '../utils/soundManager';
 
 const GameControls = ({ 
   isPaused, 
@@ -30,6 +31,12 @@ const GameControls = ({
         </button>
         <button onClick={onRestart} className="control-button">
           Restart
+        </button>
+        <button 
+          onClick={() => soundManager.toggleMute()} 
+          className="control-button sound-button"
+        >
+          {soundManager.isSoundMuted() ? '🔇' : '🔊'}
         </button>
       </div>
     </>

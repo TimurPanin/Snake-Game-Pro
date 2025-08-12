@@ -14,6 +14,7 @@ import { useGameState } from './hooks/useGameState';
 import { usePowerUps } from './hooks/usePowerUps';
 import { useGameLoop } from './hooks/useGameLoop';
 import { useHighScore } from './hooks/useHighScore';
+import soundManager from './utils/soundManager';
 import GameStats from './components/GameStats';
 import GameBoard from './components/GameBoard';
 import GameControls from './components/GameControls';
@@ -44,6 +45,7 @@ function App() {
     // Check collision with optimized collision detection
     const isGhostMode = hasActiveEffect('GHOST_MODE');
     if (checkCollision(head, state.snake, state.walls, isGhostMode)) {
+      soundManager.play('gameOver');
       actions.gameOver();
       updateHighScore(state.score);
       return;
@@ -53,6 +55,7 @@ function App() {
 
     // Check if food is eaten
     if (head.x === state.food.x && head.y === state.food.y) {
+      soundManager.play('eat');
       const hasDoublePoints = hasActiveEffect('DOUBLE_POINTS');
       const points = calculatePoints(state.gameMode.foodValue, hasDoublePoints);
       const newFood = generateRandomPosition(state.snake, state.walls);
@@ -62,6 +65,7 @@ function App() {
       
       // Level up logic
       if (shouldLevelUp(state.foodEaten)) {
+        soundManager.play('levelUp');
         const newSpeed = calculateNewSpeed(state.gameSpeed);
         actions.updateLevel(newSpeed);
       }
@@ -71,6 +75,7 @@ function App() {
 
     // Check if power-up is collected
     if (state.powerUp && head.x === state.powerUp.position.x && head.y === state.powerUp.position.y) {
+      soundManager.play('powerup');
       const effect = { type: state.powerUp.type, ...state.powerUp };
       actions.collectPowerUp(effect);
       activatePowerUp(state.powerUp.type);
@@ -124,7 +129,20 @@ function App() {
 
       if (!state.isPlaying || state.isPaused) return;
 
-      const newDirection = DIRECTIONS[e.key];
+      // Handle both arrow keys and WASD
+      let newDirection = null;
+      if (DIRECTIONS[e.key]) {
+        newDirection = DIRECTIONS[e.key];
+      } else if (e.key.toLowerCase() === 'w') {
+        newDirection = DIRECTIONS.w;
+      } else if (e.key.toLowerCase() === 's') {
+        newDirection = DIRECTIONS.s;
+      } else if (e.key.toLowerCase() === 'a') {
+        newDirection = DIRECTIONS.a;
+      } else if (e.key.toLowerCase() === 'd') {
+        newDirection = DIRECTIONS.d;
+      }
+
       if (newDirection && isValidDirectionChange(direction, newDirection)) {
         setDirection(newDirection);
       }
@@ -136,6 +154,7 @@ function App() {
 
   // Start game handler
   const handleStartGame = useCallback((mode) => {
+    soundManager.play('levelUp'); // Play start sound
     const walls = mode === GAME_MODES.MAZE ? generateWalls() : [];
     actions.startGame(mode, walls);
     setDirection(DIRECTIONS.ArrowRight);
