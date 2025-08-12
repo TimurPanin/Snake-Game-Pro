@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { GAME_MODES } from '../constants/game';
 
 const GameMenu = ({ onStartGame }) => {
@@ -20,6 +21,10 @@ const GameMenu = ({ onStartGame }) => {
       </div>
     </div>
   );
+};
+
+GameMenu.propTypes = {
+  onStartGame: PropTypes.func.isRequired
 };
 
 export default GameMenu;

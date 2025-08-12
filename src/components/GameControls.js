@@ -43,5 +43,17 @@ const GameControls = ({
   );
 };
 
+GameControls.propTypes = {
+  isPaused: PropTypes.bool.isRequired,
+  onPauseToggle: PropTypes.func.isRequired,
+  onRestart: PropTypes.func.isRequired,
+  activeEffects: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string.isRequired,
+      endTime: PropTypes.number.isRequired
+    })
+  ).isRequired
+};
+
 export default GameControls;
 

@@ -16,6 +16,7 @@ const GameBoard = ({
     <div
       ref={gameBoardRef}
       className="game-board"
+      data-testid="game-board"
       style={{
         width: GRID_SIZE * CELL_SIZE,
         height: GRID_SIZE * CELL_SIZE,
@@ -107,8 +108,7 @@ GameBoard.propTypes = {
   activeEffects: PropTypes.arrayOf(
     PropTypes.shape({
       type: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      color: PropTypes.string.isRequired
+      endTime: PropTypes.number.isRequired
     })
   ).isRequired,
   gameBoardRef: PropTypes.object

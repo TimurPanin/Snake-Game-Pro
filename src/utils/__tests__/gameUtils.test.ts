@@ -5,8 +5,8 @@ import {
   checkWallCollision,
   checkSelfCollision,
   calculatePoints,
-  calculateSpeed,
-  calculateLevel
+  calculateNewSpeed,
+  shouldLevelUp
 } from '../gameUtils';
 import { SnakeSegment, Wall, Food } from '../../types/game';
 
@@ -63,7 +63,7 @@ describe('gameUtils', () => {
   describe('generateWalls', () => {
     it('generates correct number of walls', () => {
       const walls = generateWalls();
-      const expectedCount = Math.floor(25 * 25 * 0.1); // 10% of grid
+      const expectedCount = Math.floor(25 * 0.1); // 10% of grid size
       expect(walls.length).toBe(expectedCount);
     });
 
@@ -158,7 +158,6 @@ describe('gameUtils', () => {
     it('allows valid movement', () => {
       const head: SnakeSegment = { x: 10, y: 10 };
       const snake: SnakeSegment[] = [
-        head,
         { x: 9, y: 10 },
         { x: 8, y: 10 }
       ];
@@ -169,34 +168,35 @@ describe('gameUtils', () => {
 
   describe('calculatePoints', () => {
     it('calculates base points correctly', () => {
-      expect(calculatePoints(1, false)).toBe(10);
-      expect(calculatePoints(5, false)).toBe(50);
+      expect(calculatePoints(10, false)).toBe(10);
+      expect(calculatePoints(50, false)).toBe(50);
     });
 
     it('applies double points multiplier', () => {
-      expect(calculatePoints(1, true)).toBe(20);
-      expect(calculatePoints(5, true)).toBe(100);
+      expect(calculatePoints(10, true)).toBe(20);
+      expect(calculatePoints(50, true)).toBe(100);
     });
   });
 
-  describe('calculateSpeed', () => {
-    it('calculates speed based on level', () => {
-      expect(calculateSpeed(1)).toBe(150);
-      expect(calculateSpeed(5)).toBe(110);
-      expect(calculateSpeed(10)).toBe(60);
+  describe('calculateNewSpeed', () => {
+    it('calculates speed based on current speed', () => {
+      expect(calculateNewSpeed(150)).toBe(140);
+      expect(calculateNewSpeed(100)).toBe(90);
+      expect(calculateNewSpeed(60)).toBe(50);
     });
 
     it('respects minimum speed', () => {
-      expect(calculateSpeed(20)).toBe(50); // Minimum speed
+      expect(calculateNewSpeed(50)).toBe(50); // Minimum speed
     });
   });
 
-  describe('calculateLevel', () => {
-    it('calculates level based on food eaten', () => {
-      expect(calculateLevel(0)).toBe(1);
-      expect(calculateLevel(5)).toBe(2);
-      expect(calculateLevel(10)).toBe(3);
-      expect(calculateLevel(15)).toBe(4);
+  describe('shouldLevelUp', () => {
+    it('determines if level should increase', () => {
+      expect(shouldLevelUp(4)).toBe(true); // 5th food
+      expect(shouldLevelUp(9)).toBe(true); // 10th food
+      expect(shouldLevelUp(14)).toBe(true); // 15th food
+      expect(shouldLevelUp(3)).toBe(false); // 4th food
+      expect(shouldLevelUp(8)).toBe(false); // 9th food
     });
   });
 });

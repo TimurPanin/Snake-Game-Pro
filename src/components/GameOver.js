@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const GameOver = ({ score, level, onPlayAgain, onMainMenu }) => {
   return (
@@ -18,6 +19,13 @@ const GameOver = ({ score, level, onPlayAgain, onMainMenu }) => {
       </div>
     </div>
   );
+};
+
+GameOver.propTypes = {
+  score: PropTypes.number.isRequired,
+  level: PropTypes.number.isRequired,
+  onPlayAgain: PropTypes.func.isRequired,
+  onMainMenu: PropTypes.func.isRequired
 };
 
 export default GameOver;

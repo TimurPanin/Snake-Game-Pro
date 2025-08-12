@@ -1,33 +1,30 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import GameBoard from '../GameBoard';
-import { GameState } from '../../types/game';
 
-const mockGameState: GameState = {
-  snake: [
-    { x: 12, y: 12, isHead: true },
-    { x: 11, y: 12 },
-    { x: 10, y: 12 }
-  ],
-  food: { x: 15, y: 15, type: 'normal' },
-  powerUp: null,
-  walls: [],
-  direction: 'RIGHT',
-  score: 100,
-  level: 2,
-  foodEaten: 5,
-  isPlaying: true,
-  isPaused: false,
-  gameOver: false,
-  gameMode: 'Classic',
-  gameSpeed: 150,
-  activeEffects: [],
-  highScore: 500
-};
+const mockSnake = [
+  { x: 12, y: 12 },
+  { x: 11, y: 12 },
+  { x: 10, y: 12 }
+];
+
+const mockFood = { x: 15, y: 15 };
+const mockWalls = [];
+const mockActiveEffects = [];
+const mockGameBoardRef = { current: null };
 
 describe('GameBoard', () => {
   it('renders game board with correct dimensions', () => {
-    render(<GameBoard gameState={mockGameState} />);
+    render(
+      <GameBoard
+        snake={mockSnake}
+        food={mockFood}
+        powerUp={null}
+        walls={mockWalls}
+        activeEffects={mockActiveEffects}
+        gameBoardRef={mockGameBoardRef}
+      />
+    );
     
     const gameBoard = screen.getByTestId('game-board');
     expect(gameBoard).toBeInTheDocument();
@@ -38,20 +35,38 @@ describe('GameBoard', () => {
   });
 
   it('renders snake segments correctly', () => {
-    render(<GameBoard gameState={mockGameState} />);
+    render(
+      <GameBoard
+        snake={mockSnake}
+        food={mockFood}
+        powerUp={null}
+        walls={mockWalls}
+        activeEffects={mockActiveEffects}
+        gameBoardRef={mockGameBoardRef}
+      />
+    );
     
-    const snakeSegments = screen.getAllByTestId('snake-segment');
+    const snakeSegments = document.querySelectorAll('.snake-segment');
     expect(snakeSegments).toHaveLength(3);
     
     // Check if head has special class
-    const head = screen.getByTestId('snake-head');
+    const head = document.querySelector('.snake-segment.head');
     expect(head).toBeInTheDocument();
   });
 
   it('renders food correctly', () => {
-    render(<GameBoard gameState={mockGameState} />);
+    render(
+      <GameBoard
+        snake={mockSnake}
+        food={mockFood}
+        powerUp={null}
+        walls={mockWalls}
+        activeEffects={mockActiveEffects}
+        gameBoardRef={mockGameBoardRef}
+      />
+    );
     
-    const food = screen.getByTestId('food');
+    const food = document.querySelector('.food');
     expect(food).toBeInTheDocument();
     expect(food).toHaveStyle({
       left: '270px',
@@ -60,47 +75,66 @@ describe('GameBoard', () => {
   });
 
   it('renders power-up when present', () => {
-    const gameStateWithPowerUp = {
-      ...mockGameState,
-      powerUp: { x: 8, y: 8, type: 'powerup', powerUpType: 'Speed Boost' }
+    const mockPowerUp = {
+      type: 'SPEED_BOOST',
+      position: { x: 8, y: 8 },
+      color: '#ffd700'
     };
     
-    render(<GameBoard gameState={gameStateWithPowerUp} />);
+    render(
+      <GameBoard
+        snake={mockSnake}
+        food={mockFood}
+        powerUp={mockPowerUp}
+        walls={mockWalls}
+        activeEffects={mockActiveEffects}
+        gameBoardRef={mockGameBoardRef}
+      />
+    );
     
-    const powerUp = screen.getByTestId('power-up');
+    const powerUp = document.querySelector('.power-up');
     expect(powerUp).toBeInTheDocument();
   });
 
   it('renders walls in maze mode', () => {
-    const mazeGameState = {
-      ...mockGameState,
-      gameMode: 'Maze',
-      walls: [
-        { x: 5, y: 5 },
-        { x: 6, y: 5 },
-        { x: 7, y: 5 }
-      ]
-    };
+    const mockWallsWithData = [
+      { x: 5, y: 5 },
+      { x: 6, y: 5 },
+      { x: 7, y: 5 }
+    ];
     
-    render(<GameBoard gameState={mazeGameState} />);
+    render(
+      <GameBoard
+        snake={mockSnake}
+        food={mockFood}
+        powerUp={null}
+        walls={mockWallsWithData}
+        activeEffects={mockActiveEffects}
+        gameBoardRef={mockGameBoardRef}
+      />
+    );
     
-    const walls = screen.getAllByTestId('wall');
+    const walls = document.querySelectorAll('.wall');
     expect(walls).toHaveLength(3);
   });
 
   it('applies ghost effect to snake when active', () => {
-    const ghostGameState = {
-      ...mockGameState,
-      snake: [
-        { x: 12, y: 12, isHead: true, isGhost: true },
-        { x: 11, y: 12, isGhost: true },
-        { x: 10, y: 12, isGhost: true }
-      ]
-    };
+    const mockActiveEffectsWithGhost = [
+      { type: 'GHOST_MODE', endTime: Date.now() + 6000 }
+    ];
     
-    render(<GameBoard gameState={ghostGameState} />);
+    render(
+      <GameBoard
+        snake={mockSnake}
+        food={mockFood}
+        powerUp={null}
+        walls={mockWalls}
+        activeEffects={mockActiveEffectsWithGhost}
+        gameBoardRef={mockGameBoardRef}
+      />
+    );
     
-    const ghostSegments = screen.getAllByTestId('snake-ghost');
+    const ghostSegments = document.querySelectorAll('.snake-segment.ghost');
     expect(ghostSegments).toHaveLength(3);
   });
 });

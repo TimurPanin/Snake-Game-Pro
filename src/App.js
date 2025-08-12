@@ -14,7 +14,7 @@ import { useGameState } from './hooks/useGameState';
 import { usePowerUps } from './hooks/usePowerUps';
 import { useGameLoop } from './hooks/useGameLoop';
 import { useHighScore } from './hooks/useHighScore';
-import soundManager from './utils/soundManager';
+import soundManager from './utils/soundManager.ts';
 import GameStats from './components/GameStats';
 import GameBoard from './components/GameBoard';
 import GameControls from './components/GameControls';
