@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { GRID_SIZE, CELL_SIZE } from '../constants/game';
 
-const GameBoard = ({ 
-  snake, 
-  food, 
-  powerUp, 
-  walls, 
+const GameBoard = ({
+  snake,
+  food,
+  powerUp,
+  walls,
   activeEffects,
-  gameBoardRef 
+  gameBoardRef
 }) => {
   const hasGhostMode = activeEffects.some(effect => effect.type === 'GHOST_MODE');
 
@@ -22,7 +22,6 @@ const GameBoard = ({
         height: GRID_SIZE * CELL_SIZE,
       }}
     >
-      {/* Render walls */}
       {walls.map((wall, index) => (
         <div
           key={`wall-${index}`}
@@ -36,7 +35,6 @@ const GameBoard = ({
         />
       ))}
 
-      {/* Render snake */}
       {snake.map((segment, index) => (
         <div
           key={index}
@@ -52,7 +50,6 @@ const GameBoard = ({
         />
       ))}
 
-      {/* Render food */}
       <div
         className="food"
         style={{
@@ -63,7 +60,6 @@ const GameBoard = ({
         }}
       />
 
-      {/* Render power-up */}
       {powerUp && (
         <div
           className="power-up"
@@ -74,6 +70,7 @@ const GameBoard = ({
             height: CELL_SIZE,
             backgroundColor: powerUp.color,
           }}
+          title={powerUp.name}
         />
       )}
     </div>
@@ -93,6 +90,7 @@ GameBoard.propTypes = {
   }).isRequired,
   powerUp: PropTypes.shape({
     type: PropTypes.string.isRequired,
+    name: PropTypes.string,
     position: PropTypes.shape({
       x: PropTypes.number.isRequired,
       y: PropTypes.number.isRequired
@@ -108,7 +106,8 @@ GameBoard.propTypes = {
   activeEffects: PropTypes.arrayOf(
     PropTypes.shape({
       type: PropTypes.string.isRequired,
-      endTime: PropTypes.number.isRequired
+      name: PropTypes.string,
+      color: PropTypes.string
     })
   ).isRequired,
   gameBoardRef: PropTypes.object
