@@ -1,13 +1,18 @@
 import '@testing-library/jest-dom';
 
-// Mock localStorage
 const localStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
   removeItem: jest.fn(),
   clear: jest.fn(),
-};
-global.localStorage = localStorageMock;
+  key: jest.fn(),
+  length: 0,
+} as unknown as Storage;
+
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock,
+  configurable: true,
+});
 
 // Mock Audio
 global.Audio = jest.fn().mockImplementation(() => ({
@@ -19,7 +24,7 @@ global.Audio = jest.fn().mockImplementation(() => ({
   preload: 'auto',
 }));
 
-// Mock service worker
+// Mock service worker APIs that may be referenced by browser-oriented code.
 Object.defineProperty(navigator, 'serviceWorker', {
   value: {
     register: jest.fn().mockResolvedValue({
@@ -28,15 +33,15 @@ Object.defineProperty(navigator, 'serviceWorker', {
       },
     }),
   },
+  configurable: true,
 });
 
-// Mock PWA features
 Object.defineProperty(window, 'beforeinstallprompt', {
   value: null,
   writable: true,
+  configurable: true,
 });
 
-// Mock matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
@@ -51,14 +56,12 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-// Mock ResizeObserver
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
 
-// Mock IntersectionObserver
 global.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
