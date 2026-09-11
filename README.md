@@ -9,9 +9,9 @@ The project is a compact portfolio/learning project focused on game-state manage
 ## Features
 
 - Three game modes:
-  - **Classic** — standard speed and scoring
-  - **Speed** — faster movement and higher food value
-  - **Maze** — generated internal walls
+  - **Classic** - standard speed and scoring
+  - **Speed** - faster movement and higher food value
+  - **Maze** - generated internal walls
 - Keyboard controls with **Arrow keys** or **WASD**
 - Pause/resume with **Space** or **P**
 - Score, level and persistent high score
