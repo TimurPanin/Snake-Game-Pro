@@ -1,188 +1,144 @@
-# 🐍 Snake Game Pro
+# Snake Game Pro
 
-Современная версия классической игры "Змейка" с множеством новых возможностей, созданная на React с использованием лучших практик разработки.
+A browser-based Snake game built with **React 18**, **Webpack** and **JavaScript**, with a small amount of TypeScript used for tests, types and audio utilities.
 
-## ✨ Новые возможности
+The project is a compact portfolio/learning project focused on game-state management, reusable React hooks, collision logic, local persistence and automated tests.
 
-### 🎮 Режимы игры
-- **Classic** - Классическая змейка с базовой скоростью
-- **Speed** - Высокоскоростной режим для опытных игроков  
-- **Maze** - Режим с препятствиями (стены)
+## Features
 
-### ⚡ Пауэр-апы
-- **Speed Boost** ⚡ (золотой) - Увеличивает скорость на 5 секунд
-- **Double Points** 💎 (розовый) - Удваивает очки на 8 секунд
-- **Ghost Mode** 👻 (голубой) - Позволяет проходить сквозь стены и себя на 6 секунд
-- **Shield** 🛡️ (зеленый) - Защита от столкновений на 10 секунд
-- **Time Freeze** ⏰ (фиолетовый) - Останавливает время на 4 секунды
-- **Magnet** 🧲 (оранжевый) - Притягивает еду к змейке на 7 секунд
+- Three game modes:
+  - **Classic** — standard speed and scoring
+  - **Speed** — faster movement and higher food value
+  - **Maze** — generated internal walls
+- Keyboard controls with **Arrow keys** or **WASD**
+- Pause/resume with **Space** or **P**
+- Score, level and persistent high score
+- Level progression every five food pickups
+- Increasing game speed as the level rises
+- Three implemented temporary power-ups:
+  - **Speed Boost**
+  - **Double Points**
+  - **Ghost Mode** with edge wrapping and collision bypass
+- Synthesized game sound effects using the Web Audio API
+- Mute/unmute control
+- Responsive layout styling
+- Jest + Testing Library tests for game utilities and the game board
 
-### 🎯 Система прогрессии
-- **Уровни** - Каждые 5 съеденных еды = новый уровень
-- **Увеличение скорости** - С каждым уровнем игра становится быстрее
-- **Рекорды** - Сохранение лучшего результата в localStorage
+## Tech stack
 
-### 🎨 Улучшенный интерфейс
-- Современный дизайн с градиентами и анимациями
-- Адаптивная верстка для мобильных устройств
-- Красивые эффекты и переходы
-- Индикаторы активных эффектов
-- Кнопка управления звуком 🔊/🔇
+- **React 18**
+- **JavaScript / JSX**
+- **TypeScript tooling** for selected files and tests
+- **Webpack 5**
+- **Babel**
+- **CSS3**
+- **Jest**
+- **Testing Library**
+- **PropTypes**
+- **localStorage**
+- **Web Audio API**
 
-### 🔊 Звуковая система
-- **Звуки еды** - Приятный звук при поедании еды
-- **Звуки пауэр-апов** - Особые звуки для каждого бонуса
-- **Звук Game Over** - Драматичный звук при проигрыше
-- **Звук повышения уровня** - Праздничный звук при достижении нового уровня
-- **Фоновая музыка** - Мелодичная музыка во время игры
-- **Управление звуком** - Возможность включить/выключить звуки
+> The main application is primarily JavaScript. TypeScript is present in supporting files and tests, so this repository should not be considered a fully TypeScript application.
 
-## 🏗️ Архитектура
-
-### 📁 Структура проекта
+## Project structure
 
 ```text
 src/
-├── components/          # React компоненты
-│   ├── GameBoard.js     # Игровое поле
-│   ├── GameControls.js  # Управление игрой
-│   ├── GameMenu.js      # Меню выбора режима
-│   ├── GameOver.js      # Экран Game Over
-│   └── GameStats.js     # Статистика игры
-├── constants/           # Константы
-│   └── game.js         # Игровые константы
-├── hooks/              # Кастомные хуки
-│   ├── useGameState.js  # Управление состоянием игры
-│   ├── useGameLoop.js   # Игровой цикл
-│   ├── usePowerUps.js   # Управление пауэр-апами
-│   └── useHighScore.js  # Управление рекордами
-├── utils/              # Утилиты
-│   ├── gameUtils.js    # Игровая логика
-│   ├── storage.js      # Работа с localStorage
-│   └── soundManager.js # Звуковая система
-└── App.js              # Главный компонент
+├── components/
+│   ├── GameBoard.js
+│   ├── GameControls.js
+│   ├── GameMenu.js
+│   ├── GameOver.js
+│   ├── GameStats.js
+│   └── __tests__/
+├── constants/
+│   └── game.js
+├── hooks/
+│   ├── useGameLoop.js
+│   ├── useGameState.js
+│   ├── useHighScore.js
+│   └── usePowerUps.js
+├── types/
+│   └── game.ts
+├── utils/
+│   ├── gameUtils.js
+│   ├── soundManager.ts
+│   ├── storage.js
+│   └── __tests__/
+├── App.js
+├── index.js
+└── styles.css
 ```
 
-### 🔧 Технические улучшения
+## Architecture notes
 
-#### **Управление состоянием**
-- **useReducer** вместо множественных useState
-- **Кастомные хуки** для разделения логики
-- **Оптимизированные колбэки** с useCallback
+Game state is managed through a reducer-based custom hook in `useGameState.js`. The timed game loop is isolated in `useGameLoop.js`, temporary effects are managed in `usePowerUps.js`, and high-score persistence is separated into `useHighScore.js`.
 
-#### **Производительность**
-- **useMemo** для кэширования вычислений
-- **Разделение компонентов** для лучшего рендеринга
-- **Оптимизированные зависимости** в useEffect
+Collision detection, random positions, maze-wall generation, scoring and speed calculations are kept in `gameUtils.js` rather than directly in the React components.
 
-#### **Безопасность**
-- **Обработка ошибок** localStorage
-- **Валидация данных** с PropTypes
-- **Защита от утечек памяти** в таймаутах
+The maze generator keeps the initial snake spawn area clear so a new game does not begin with an obstacle on top of the player.
 
-#### **Код-качество**
-- **Константы** вместо магических чисел
-- **Утилиты** для переиспользуемой логики
-- **Типизация** с PropTypes
+## Run locally
 
-## 🎮 Управление
+### Requirements
 
-### Клавиши движения
-- **Стрелки** (↑↓←→) или **WASD** - Управление змейкой
-- **Space/P** - Пауза/Возобновление игры
+- Node.js 18+ recommended
+- npm
 
-### Кнопки интерфейса
-- **Pause/Resume** - Приостановка игры
-- **Restart** - Перезапуск текущего режима
-- **🔊/🔇** - Включение/выключение звука
-- **Play Again** - Повторная игра после Game Over
-- **Main Menu** - Возврат в меню выбора режима
-
-## 🚀 Запуск
+### Install
 
 ```bash
-# Установка зависимостей
-npm install
+npm ci
+```
 
-# Запуск в режиме разработки
+### Development server
+
+```bash
 npm start
+```
 
-# Сборка для продакшена
+Webpack Dev Server runs on port `3000` by default.
+
+### Production build
+
+```bash
 npm run build
 ```
 
-Игра автоматически откроется в браузере на `http://localhost:3000`
+The generated files are written to `dist/`.
 
-## 🛠 Технологии
+## Tests
 
-- **React 18** - Основной фреймворк
-- **Webpack 5** - Сборка проекта
-- **Babel** - Транспиляция JSX
-- **CSS3** - Стилизация с анимациями
-- **localStorage** - Сохранение рекордов
-- **PropTypes** - Runtime типизация
+Run the test suite once:
 
-## 🎯 Особенности реализации
+```bash
+npm test -- --runInBand
+```
 
-### Архитектура
-- **Функциональные компоненты** с хуками
-- **useReducer** для сложного состояния
-- **Кастомные хуки** для переиспользуемой логики
-- **Модульная структура** кода
+Watch mode:
 
-### Игровая механика
-- **Плавное движение** змейки
-- **Система коллизий** с учетом пауэр-апов
-- **Динамическая генерация** препятствий
-- **Адаптивная скорость** игры
+```bash
+npm run test:watch
+```
 
-### Визуальные эффекты
-- **Анимация пульсации** еды
-- **Эффект парения** пауэр-апов
-- **Призрачный режим** с прозрачностью
-- **Плавные переходы** и hover-эффекты
+The repository currently contains tests for core game utilities and the `GameBoard` component.
 
-### Оптимизация
-- **useCallback** для стабильных ссылок
-- **useMemo** для кэширования
-- **Разделение компонентов** для лучшего рендеринга
-- **Оптимизированные зависимости** в хуках
+## Additional checks
 
-## 📱 Адаптивность
+```bash
+npm run type-check
+npm run lint
+```
 
-Игра полностью адаптирована для:
-- Десктопных браузеров
-- Планшетов
-- Мобильных устройств
+## Controls
 
-## 🎨 Кастомизация
+| Action | Control |
+|---|---|
+| Move | Arrow keys / WASD |
+| Pause / resume | Space / P |
+| Restart | Restart button |
+| Sound | Speaker button |
 
-Легко настраиваемые параметры в `src/constants/game.js`:
-- Размер игрового поля
-- Скорость игры
-- Частота появления пауэр-апов
-- Цвета и стили
+## Notes
 
-## 🔮 Планы развития
-
-- [x] TypeScript интеграция
-- [x] Unit тесты с Jest
-- [x] Мультиплеер режим
-- [x] Дополнительные пауэр-апы
-- [x] Система достижений
-- [x] Звуковые эффекты
-- [x] Темная тема
-- [x] Экспорт рекордов
-- [x] PWA поддержка
-
-## 📊 Метрики качества
-
-- **Размер бандла**: ~1.4MB (оптимизировано)
-- **Время загрузки**: <2 секунды
-- **Производительность**: 60 FPS
-- **Покрытие кода**: Структурировано для тестирования
-- **Доступность**: WCAG 2.1 совместимость
-
----
-
-**Наслаждайтесь игрой! 🎮**
+This repository intentionally presents only features that are implemented in the current codebase. Earlier experimental documentation referenced planned features such as multiplayer, achievements and additional power-ups; those are not presented as current functionality.
