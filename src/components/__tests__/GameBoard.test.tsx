@@ -9,8 +9,8 @@ const mockSnake = [
 ];
 
 const mockFood = { x: 15, y: 15 };
-const mockWalls = [];
-const mockActiveEffects = [];
+const mockWalls: Array<{ x: number; y: number }> = [];
+const mockActiveEffects: Array<{ type: string; endTime?: number }> = [];
 const mockGameBoardRef = { current: null };
 
 describe('GameBoard', () => {
@@ -25,7 +25,7 @@ describe('GameBoard', () => {
         gameBoardRef={mockGameBoardRef}
       />
     );
-    
+
     const gameBoard = screen.getByTestId('game-board');
     expect(gameBoard).toBeInTheDocument();
     expect(gameBoard).toHaveStyle({
@@ -45,11 +45,10 @@ describe('GameBoard', () => {
         gameBoardRef={mockGameBoardRef}
       />
     );
-    
+
     const snakeSegments = document.querySelectorAll('.snake-segment');
     expect(snakeSegments).toHaveLength(3);
-    
-    // Check if head has special class
+
     const head = document.querySelector('.snake-segment.head');
     expect(head).toBeInTheDocument();
   });
@@ -65,7 +64,7 @@ describe('GameBoard', () => {
         gameBoardRef={mockGameBoardRef}
       />
     );
-    
+
     const food = document.querySelector('.food');
     expect(food).toBeInTheDocument();
     expect(food).toHaveStyle({
@@ -77,10 +76,11 @@ describe('GameBoard', () => {
   it('renders power-up when present', () => {
     const mockPowerUp = {
       type: 'SPEED_BOOST',
+      name: 'Speed Boost',
       position: { x: 8, y: 8 },
       color: '#ffd700'
     };
-    
+
     render(
       <GameBoard
         snake={mockSnake}
@@ -91,7 +91,7 @@ describe('GameBoard', () => {
         gameBoardRef={mockGameBoardRef}
       />
     );
-    
+
     const powerUp = document.querySelector('.power-up');
     expect(powerUp).toBeInTheDocument();
   });
@@ -102,7 +102,7 @@ describe('GameBoard', () => {
       { x: 6, y: 5 },
       { x: 7, y: 5 }
     ];
-    
+
     render(
       <GameBoard
         snake={mockSnake}
@@ -113,7 +113,7 @@ describe('GameBoard', () => {
         gameBoardRef={mockGameBoardRef}
       />
     );
-    
+
     const walls = document.querySelectorAll('.wall');
     expect(walls).toHaveLength(3);
   });
@@ -122,7 +122,7 @@ describe('GameBoard', () => {
     const mockActiveEffectsWithGhost = [
       { type: 'GHOST_MODE', endTime: Date.now() + 6000 }
     ];
-    
+
     render(
       <GameBoard
         snake={mockSnake}
@@ -133,7 +133,7 @@ describe('GameBoard', () => {
         gameBoardRef={mockGameBoardRef}
       />
     );
-    
+
     const ghostSegments = document.querySelectorAll('.snake-segment.ghost');
     expect(ghostSegments).toHaveLength(3);
   });
