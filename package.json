@@ -1,7 +1,16 @@
 {
   "name": "react-snake-game",
   "version": "1.0.0",
-  "description": "Snake game built with React",
+  "private": true,
+  "description": "React browser Snake game with multiple modes, power-ups, local high scores and Jest tests.",
+  "keywords": [
+    "react",
+    "javascript",
+    "snake-game",
+    "browser-game",
+    "webpack",
+    "jest"
+  ],
   "scripts": {
     "start": "webpack serve --mode development --open",
     "build": "webpack --mode production",
