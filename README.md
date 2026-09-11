@@ -4,7 +4,7 @@
 
 A browser-based Snake game built with **React 18**, **Webpack** and **JavaScript**, with a small amount of TypeScript used for tests, types and audio utilities.
 
-The project is a compact portfolio/learning project focused on game-state management, reusable React hooks, collision logic, local persistence and automated tests.
+The project is a compact portfolio and learning project focused on game-state management, reusable React hooks, collision logic, local persistence and automated tests.
 
 ## Features
 
@@ -24,12 +24,12 @@ The project is a compact portfolio/learning project focused on game-state manage
 - Synthesized game sound effects using the Web Audio API
 - Mute/unmute control
 - Responsive layout styling
-- Jest + Testing Library tests for game utilities and the game board
+- Jest and Testing Library tests for game utilities and the game board
 
 ## Tech stack
 
 - **React 18**
-- **JavaScript / JSX**
+- **JavaScript and JSX**
 - **TypeScript tooling** for selected files and tests
 - **Webpack 5**
 - **Babel**
@@ -126,8 +126,8 @@ The current test suite contains **25 tests** covering core game utilities and th
 
 | Action | Control |
 |---|---|
-| Move | Arrow keys / WASD |
-| Pause / resume | Space / P |
+| Move | Arrow keys or WASD |
+| Pause or resume | Space or P |
 | Restart | Restart button |
 | Sound | Speaker button |
 
