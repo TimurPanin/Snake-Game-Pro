@@ -1,5 +1,7 @@
 # Snake Game Pro
 
+[![CI](https://github.com/TimurPanin/Snake-Game-Pro/actions/workflows/ci.yml/badge.svg)](https://github.com/TimurPanin/Snake-Game-Pro/actions/workflows/ci.yml)
+
 A browser-based Snake game built with **React 18**, **Webpack** and **JavaScript**, with a small amount of TypeScript used for tests, types and audio utilities.
 
 The project is a compact portfolio/learning project focused on game-state management, reusable React hooks, collision logic, local persistence and automated tests.
@@ -107,28 +109,18 @@ npm run build
 
 The generated files are written to `dist/`.
 
-## Tests
-
-Run the test suite once:
+## Tests and checks
 
 ```bash
 npm test -- --runInBand
-```
-
-Watch mode:
-
-```bash
-npm run test:watch
-```
-
-The repository currently contains tests for core game utilities and the `GameBoard` component.
-
-## Additional checks
-
-```bash
 npm run type-check
 npm run lint
+npm run build
 ```
+
+GitHub Actions runs the production-dependency audit, tests, type check, lint and production build on pushes and pull requests to `main`.
+
+The current test suite contains **25 tests** covering core game utilities and the `GameBoard` component.
 
 ## Controls
 
