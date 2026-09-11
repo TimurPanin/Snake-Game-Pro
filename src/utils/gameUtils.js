@@ -4,8 +4,8 @@ import { GRID_SIZE, WALL_PERCENTAGE, POWER_UP_CHANCE, POWER_UPS, LEVEL_UP_FOOD_C
 export const generateRandomPosition = (snake, walls = []) => {
   let position;
   let attempts = 0;
-  const maxAttempts = GRID_SIZE * GRID_SIZE; // Prevent infinite loop
-  
+  const maxAttempts = GRID_SIZE * GRID_SIZE;
+
   do {
     position = {
       x: Math.floor(Math.random() * GRID_SIZE),
@@ -18,18 +18,27 @@ export const generateRandomPosition = (snake, walls = []) => {
       walls.some((wall) => wall.x === position.x && wall.y === position.y)
     )
   );
-  
+
   return position;
 };
 
 export const generateWalls = () => {
   const newWalls = [];
   const wallCount = Math.floor(GRID_SIZE * WALL_PERCENTAGE);
-  
-  for (let i = 0; i < wallCount; i++) {
-    newWalls.push(generateRandomPosition([], newWalls));
+  const center = Math.floor(GRID_SIZE / 2);
+
+  while (newWalls.length < wallCount) {
+    const position = generateRandomPosition([], newWalls);
+    const distanceFromCenter = Math.sqrt(
+      Math.pow(position.x - center, 2) + Math.pow(position.y - center, 2)
+    );
+
+    // Keep the initial snake spawn area clear.
+    if (distanceFromCenter > 2) {
+      newWalls.push(position);
+    }
   }
-  
+
   return newWalls;
 };
 
@@ -48,20 +57,18 @@ export const checkSelfCollision = (head, snake) => {
 
 export const checkCollision = (head, snake, walls, isGhostMode = false) => {
   if (isGhostMode) {
-    // Ghost mode: wrap around edges
+    // Ghost mode wraps around the board and ignores walls/self-collision.
     if (head.x < 0) head.x = GRID_SIZE - 1;
     if (head.x >= GRID_SIZE) head.x = 0;
     if (head.y < 0) head.y = GRID_SIZE - 1;
     if (head.y >= GRID_SIZE) head.y = 0;
-    return false; // No collision in ghost mode
+    return false;
   }
-  
-  // Wall collision
+
   if (checkWallCollision(head) || checkWallCollisionWithWalls(head, walls)) {
     return true;
   }
-  
-  // Self collision
+
   return checkSelfCollision(head, snake);
 };
 
@@ -72,11 +79,11 @@ export const shouldGeneratePowerUp = () => {
 
 export const generateRandomPowerUp = (snake, walls) => {
   if (!shouldGeneratePowerUp()) return null;
-  
+
   const powerUpTypes = Object.keys(POWER_UPS);
   const randomType = powerUpTypes[Math.floor(Math.random() * powerUpTypes.length)];
   const position = generateRandomPosition(snake, walls);
-  
+
   return {
     type: randomType,
     position,
@@ -110,4 +117,3 @@ export const isValidDirectionChange = (currentDirection, newDirection) => {
     (currentDirection.y === -1 && newDirection.y === 1)
   );
 };
-
