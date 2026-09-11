@@ -2,7 +2,7 @@
   "name": "react-snake-game",
   "version": "1.0.0",
   "private": true,
-  "description": "React browser Snake game with multiple modes, power-ups, local high scores and Jest tests.",
+  "description": "React browser Snake game with multiple modes, power-ups, local high scores and automated tests.",
   "keywords": [
     "react",
     "javascript",
